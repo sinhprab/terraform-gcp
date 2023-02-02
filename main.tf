@@ -6,7 +6,6 @@ terraform {
     }
   }
 }
-:wq
 provider "google" {
   credentials = file("/Users/Pranshu/Downloads/pranshu-001-e1ea1a7da83e.json")
 
