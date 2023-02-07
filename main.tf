@@ -23,10 +23,6 @@ resource "google_compute_subnetwork" "public-subnet" {
 
   ip_cidr_range = "10.0.0.0/24"
   region        = "europe-north1"
-
-  #stack_type       = "IPV4_IPV6"
-  #ipv6_access_type = "EXTERNAL"
-
   network = google_compute_network.vpc_network.name
 }
 # Create private subnet
@@ -36,9 +32,7 @@ resource "google_compute_subnetwork" "private-subnet" {
   ip_cidr_range = "10.0.0.0/20"
   network       = google_compute_network.vpc_network.name
   region        = "europe-north1"
-  #private_ip_google_access = "false"
 }
-
 
 ## For creating NAT , Router is required so will create Router 1st
 ## Create Cloud Router
