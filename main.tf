@@ -18,18 +18,6 @@ resource "google_compute_network" "vpc_network" {
   auto_create_subnetworks = "false"
 }
 
-#  Create public subnet  
-
-#resource "google_compute_subnetwork" "" {
-#    name          = "public-subnet-001"
-#  ip_cidr_range = "10.10.0.0/24"
-# stack_type       = "IPV4_IPV6"
-#ipv6_access_type = "EXTERNAL"
-#network       = "terraform-network-custom-001"
-#depends_on    = ["google_compute_network.vpc_network"]
-#region        = "europe-north1"
-#}
-
 resource "google_compute_subnetwork" "public-subnet" {
   name = "public-subnet-0011"
 
