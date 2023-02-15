@@ -25,7 +25,7 @@ resource "google_compute_subnetwork" "public-subnet" {
   region        = "europe-north1"
   network = google_compute_network.vpc_network.name
 }
-# Create private subnet
+# Create a private subnet
 
 resource "google_compute_subnetwork" "private-subnet" {
   name          = "private-subnet-0011"
