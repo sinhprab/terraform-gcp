@@ -23,7 +23,7 @@ resource "google_compute_subnetwork" "public-subnet" {
 
   ip_cidr_range = "10.0.0.0/24"
   region        = "europe-north1"
-  network = google_compute_network.vpc_network.name
+  network       = google_compute_network.vpc_network.name
 }
 # Create a private subnet
 
