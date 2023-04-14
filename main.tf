@@ -18,12 +18,13 @@ resource "google_compute_network" "vpc_network" {
   auto_create_subnetworks = "false"
 }
 
+# Create public subnet
 resource "google_compute_subnetwork" "public-subnet" {
   name = "public-subnet-0011"
 
   ip_cidr_range = "10.0.0.0/24"
   region        = "europe-north1"
-  network = google_compute_network.vpc_network.name
+  network       = google_compute_network.vpc_network.name
 }
 # Create private subnet
 
@@ -34,7 +35,7 @@ resource "google_compute_subnetwork" "private-subnet" {
   region        = "europe-north1"
 }
 
-## For creating NAT , Router is required so will create Router 1st
+## For creating NAT , Router is required so router will be created 1st
 ## Create Cloud Router
 
 resource "google_compute_router" "router" {
@@ -52,4 +53,41 @@ resource "google_compute_router_nat" "nat" {
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   icmp_idle_timeout_sec              = 60
+}
+
+# Creating Compute Instance with w.r.t public subnet
+resource "google_compute_instance" "public-compute-inst" {
+  name         = "gce-public-001"
+  zone         = "europe-north1-a"
+  machine_type = "e2-medium"
+
+  network_interface {
+    network = "terraform-network-custom-001"
+    subnetwork = "public-subnet-0011"
+  }
+  boot_disk {
+    initialize_params {
+      image = "debian-11-bullseye-arm64-v20230411"
+      size  = 10
+    }
+  }
+}
+
+# Creating Compute Instance with w.r.t private subnet
+
+resource "google_compute_instance" "private-compute-inst" {
+  name         = "gce-private-001"
+  zone         = "europe-north1-b"
+  machine_type = "e2-medium"
+
+  network_interface {
+    network = "terraform-network-custom-001"
+    subnetwork = "private-subnet-0011"
+  }
+  boot_disk {
+    initialize_params {
+      image = "debian-11-bullseye-arm64-v20230411"
+      size  = 10
+    }
+  }
 }
